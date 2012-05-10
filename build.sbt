@@ -42,7 +42,7 @@ libraryDependencies <+= scalaVersion(
 // Fork for the test run to avoid classloader problems with reification
 fork in Test := true
 
-testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v", "-s", "-a")
+testOptions += Tests.Argument(TestFrameworks.JUnit, /*"-q",*/ "-v", "-s", "-a")
 
 publishTo <<= (repoKind)(r => Some(Resolver.file("test", file("c:/temp/repo/"+r))))
 /*publishTo <<= (repoKind){
