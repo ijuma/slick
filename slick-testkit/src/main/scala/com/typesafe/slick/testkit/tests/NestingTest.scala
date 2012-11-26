@@ -13,6 +13,8 @@ class NestingTest(val tdb: TestDB) extends TestkitTest {
       def a = column[Int]("A")
       def b = column[String]("B")
       def c = column[String]("C")
+      def ab = a ~ b
+      def c5 = c ~ 5
       def * = a ~ b ~ c
     }
 
@@ -56,6 +58,13 @@ class NestingTest(val tdb: TestDB) extends TestkitTest {
     println("q1d: "+q1d.selectStatement)
     println(q1d.list)
     assertEquals(res1b, q1d.to[List])
+
+    val q1e = (for {
+      ab <- T.map(t => t.ab)
+      c5 <- T.map(t => t.c5)
+    } yield ab ~ c5).sortBy(t => t._3 ~ t._1)
+    println("q1e: "+q1e.selectStatement)
+    assertEquals(res1, q1e.to[List])
 
     val res2 = Set((1, "1", 8), (2, "2", 10))
 
